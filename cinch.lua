@@ -31,7 +31,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
   -- progress message
   url_count = url_count + 1
   if url_count % 25 == 0 then
-    print("Downloaded #"..url_count)
+    print(" - Downloaded "..url_count.." URLs")
   end
 
   if string.match(url, "^http://cinch\.fm/[^.]+$") or string.match(url, "^http://cinch\.fm/[^.]+\.aspx$") then
