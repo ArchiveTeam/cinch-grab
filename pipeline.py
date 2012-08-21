@@ -70,7 +70,7 @@ project = Project(
 )
 
 pipeline = Pipeline(
-  GetItemFromTracker("http://tracker.archiveteam.org/cinch", downloader),
+  GetItemFromTracker("http://tracker.archiveteam.org/cinch", downloader, VERSION),
   PrepareDirectories(),
   WgetDownload([ "./wget-lua",
       "-U", USER_AGENT,
