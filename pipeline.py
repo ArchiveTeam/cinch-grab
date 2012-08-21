@@ -14,7 +14,7 @@ from seesaw.tracker import *
 
 DATA_DIR = "data"
 USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27"
-VERSION = "20120821.01"
+VERSION = "20120821.02"
 
 class PrepareDirectories(SimpleTask):
   def __init__(self):
@@ -31,7 +31,7 @@ class PrepareDirectories(SimpleTask):
 
     item["item_dir"] = dirname
     item["data_dir"] = DATA_DIR
-    item["warc_file_base"] = "cinch.fm-%s-%s" % (item_name, time.strftime("%Y%m%d-%H%M%S"))
+    item["warc_file_base"] = "cinch.fm-range-%s-%s" % (item_name, time.strftime("%Y%m%d-%H%M%S"))
 
 class MoveFiles(SimpleTask):
   def __init__(self):
@@ -81,12 +81,21 @@ pipeline = Pipeline(
       "--adjust-extension",
       "-e", "robots=off",
       "--page-requisites", "--span-hosts",
-      "--lua-script", "cinch.lua",
+      "--lua-script", "cinch-range.lua",
       "--warc-file", ItemInterpolation("%(item_dir)s/%(warc_file_base)s"),
       "--warc-header", "operator: Archive Team",
       "--warc-header", "cinch-fm-dld-script-version: " + VERSION,
-      "--warc-header", ItemInterpolation("cinch-fm-user: %(item_name)s"),
-      ItemInterpolation("http://cinch.fm/%(item_name)s")
+      "--warc-header", ItemInterpolation("cinch-fm-range: %(item_name)s"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s0"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s1"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s2"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s3"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s4"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s5"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s6"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s7"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s8"),
+      ItemInterpolation("http://cinch.fm/cinchplaylist.aspx?RecordingID=%(item_name)s9")
     ],
     max_tries = 2,
     accept_on_exit_code = [ 0, 4, 6, 8 ],
